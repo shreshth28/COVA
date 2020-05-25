@@ -1,0 +1,75 @@
+package com.shreshth.cova;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firestore.v1.DocumentTransform;
+
+import java.util.Map;
+
+public class CommunityChatActivity extends AppCompatActivity {
+
+    Button sendButton;
+    EditText messageEditText;
+    private RecyclerView recyclerView;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference messageRef = db.collection("messages");
+    NoteAdapter noteAdapter;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_community_chat);
+        setupRecyclerView();
+        messageEditText=findViewById(R.id.message_input_edit_text);
+        sendButton=findViewById(R.id.button_send);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message=messageEditText.getText().toString();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String uid = user.getUid();
+                String name=user.getDisplayName();
+                DocumentTransform.FieldTransform.ServerValue timestamp = DocumentTransform.FieldTransform.ServerValue.REQUEST_TIME;
+                messageRef.add(new Note(message,name,timestamp,uid));
+                messageEditText.setText("");
+            }
+        });
+
+    }
+
+    private void setupRecyclerView() {
+        Query query=messageRef.orderBy("timestamp", Query.Direction.ASCENDING);
+        FirestoreRecyclerOptions<Note> options=new FirestoreRecyclerOptions.Builder<Note>().setQuery(query,Note.class).build();
+noteAdapter=new NoteAdapter(options);
+recyclerView=findViewById(R.id.chat_list_rv);
+recyclerView.setHasFixedSize(true);
+recyclerView.setLayoutManager(new LinearLayoutManager(this));
+recyclerView.setAdapter(noteAdapter);
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        noteAdapter.startListening();
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        noteAdapter.stopListening();
+    }
+}

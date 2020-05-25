@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">COVA</string>
+    <string name="community_chat">Community Chat</string>
+    <string name="enter_your_message">Enter Your Message</string>
 </resources>
