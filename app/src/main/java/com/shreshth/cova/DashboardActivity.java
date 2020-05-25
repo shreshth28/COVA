@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,8 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,16 +42,27 @@ public class DashboardActivity extends AppCompatActivity {
         if(FirebaseAuth.getInstance().getCurrentUser()==null) {
             showSignInOptions();
         }
-        Toolbar toolbar=findViewById(R.id.dashboard_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("DASHBOARD");
-        community_chat_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent communityChatIntent=new Intent(DashboardActivity.this,CommunityChatActivity.class);
-                startActivity(communityChatIntent);
-            }
-        });
+        else {
+            Toolbar toolbar = findViewById(R.id.dashboard_toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("DASHBOARD");
+            toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryText));
+            community_chat_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent communityChatIntent = new Intent(DashboardActivity.this, CommunityChatActivity.class);
+                    startActivity(communityChatIntent);
+                }
+            });
+           makeSearchQuery();
+        }
+
+    }
+
+    private void makeSearchQuery() {
+        URL url=NetworkHelper.buildNetworkUrl();
+        GetCovidData getCovidData=new GetCovidData();
+        getCovidData.execute(url);
     }
 
     @Override
@@ -102,5 +116,28 @@ public class DashboardActivity extends AppCompatActivity {
             showSignInOptions();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class GetCovidData extends AsyncTask<URL,Void,String>
+    {
+
+        @Override
+        protected String doInBackground(URL... urls) {
+            URL url=urls[0];
+            String response = null;
+            try {
+                response=NetworkHelper.getResponseFromHttpUrl(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(DashboardActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            return response;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
     }
 }

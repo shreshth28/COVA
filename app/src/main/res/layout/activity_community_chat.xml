@@ -7,8 +7,10 @@
     android:orientation="vertical"
     tools:context=".CommunityChatActivity">
 
-
+    <include layout="@layout/toolbar"
+        android:id="@+id/community_toolbar"/>
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/chat_list_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -20,7 +22,7 @@
     <EditText
         android:id="@+id/message_input_edit_text"
         android:layout_width="0dp"
-        android:layout_height="104dp"
+        android:layout_height="wrap_content"
         android:hint="@string/enter_your_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_send"
@@ -28,9 +30,11 @@
 
     <Button
         android:id="@+id/button_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_send"
         app:layout_constraintBottom_toBottomOf="@+id/message_input_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/message_input_edit_text" />

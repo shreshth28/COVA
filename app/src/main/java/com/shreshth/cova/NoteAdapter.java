@@ -1,5 +1,6 @@
 package com.shreshth.cova;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +29,7 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note,NoteAdapter.NoteH
      *
      * @param options
      */
+    Context context;
     public NoteAdapter(@NonNull FirestoreRecyclerOptions<Note> options) {
         super(options);
     }
@@ -38,6 +41,10 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note,NoteAdapter.NoteH
         if(model.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
         {
             holder.linearLayout.setGravity(END);
+            holder.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.colorLightPrimary));
+        }
+        else{
+            holder.linearLayout.setGravity(START);
         }
     }
 
@@ -45,6 +52,7 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note,NoteAdapter.NoteH
     @Override
     public NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item,parent,false);
+        context=parent.getContext();
         return new NoteHolder(v);
     }
 
@@ -53,12 +61,14 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note,NoteAdapter.NoteH
         TextView textViewMessage;
         TextView textViewName;
         LinearLayout linearLayout;
+        CardView cardView;
 
         public NoteHolder(@NonNull View itemView) {
             super(itemView);
             textViewMessage=itemView.findViewById(R.id.message_text_view);
             textViewName=itemView.findViewById(R.id.name_text_view);
             linearLayout=itemView.findViewById(R.id.linear_layout);
+            cardView=itemView.findViewById(R.id.mssg_card);
         }
     }
 }

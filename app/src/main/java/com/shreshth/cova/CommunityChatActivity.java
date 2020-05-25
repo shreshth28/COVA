@@ -1,6 +1,7 @@
 package com.shreshth.cova;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,10 +14,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firestore.v1.DocumentTransform;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CommunityChatActivity extends AppCompatActivity {
@@ -34,6 +37,11 @@ public class CommunityChatActivity extends AppCompatActivity {
         setupRecyclerView();
         messageEditText=findViewById(R.id.message_input_edit_text);
         sendButton=findViewById(R.id.button_send);
+        Toolbar toolbar=findViewById(R.id.community_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Community");
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,8 +49,8 @@ public class CommunityChatActivity extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String uid = user.getUid();
                 String name=user.getDisplayName();
-                DocumentTransform.FieldTransform.ServerValue timestamp = DocumentTransform.FieldTransform.ServerValue.REQUEST_TIME;
-                messageRef.add(new Note(message,name,timestamp,uid));
+                long timestamp=System.currentTimeMillis();
+                messageRef.add(new Note(message,name,String.valueOf(timestamp),uid));
                 messageEditText.setText("");
             }
         });
