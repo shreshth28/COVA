@@ -1,4 +1,4 @@
-package com.shreshth.cova;
+package com.shreshth.cova.models;
 
 import com.google.firebase.firestore.FieldValue;
 import com.google.firestore.v1.DocumentTransform;

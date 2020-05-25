@@ -1,4 +1,4 @@
-package com.shreshth.cova;
+package com.shreshth.cova.network;
 
 import android.net.Uri;
 

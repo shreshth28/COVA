@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,6 +18,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.shreshth.cova.network.NetworkHelper;
 
 import java.io.IOException;
 import java.net.URL;
@@ -60,7 +60,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void makeSearchQuery() {
-        URL url=NetworkHelper.buildNetworkUrl();
+        URL url= NetworkHelper.buildNetworkUrl();
         GetCovidData getCovidData=new GetCovidData();
         getCovidData.execute(url);
     }
