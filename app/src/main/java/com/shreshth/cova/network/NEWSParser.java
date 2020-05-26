@@ -12,7 +12,7 @@ import java.util.List;
 public class NEWSParser {
 
 
-    public List<News> parseNewsJson(String data)
+    public static List<News> parseNewsJson(String data)
     {
         List<News> newsList=new ArrayList<>();
         try {

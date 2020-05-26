@@ -21,38 +21,8 @@ public class NewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        GetNewsData getNewsData=new GetNewsData();
-        URL url=NetworkHelper.buildNewsNetworkUrl();
-        getNewsData.execute(url);
+
 
     }
-    class GetNewsData extends AsyncTask<URL,Void,String>
-    {
 
-        @Override
-        protected String doInBackground(URL... urls) {
-            URL url=urls[0];
-            String response = null;
-            try {
-                response= NetworkHelper.getResponseFromHttpUrl(url);
-            } catch (IOException e) {
-            }
-            return response;
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if(s==null)
-            {
-                Toast.makeText(NewsActivity.this, "Request Failed", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            else{
-                Toast.makeText(NewsActivity.this,s, Toast.LENGTH_LONG).show();
-                Log.d(NewsActivity.class.getSimpleName(),s);
-            }
-        }
-    }
 }
