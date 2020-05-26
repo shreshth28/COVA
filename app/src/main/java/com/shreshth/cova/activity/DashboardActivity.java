@@ -1,4 +1,4 @@
-package com.shreshth.cova;
+package com.shreshth.cova.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,19 +18,17 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.github.mikephil.charting.charts.BarChart;
 
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.shreshth.cova.R;
 import com.shreshth.cova.models.Country;
 import com.shreshth.cova.network.JSONParser;
 import com.shreshth.cova.network.NetworkHelper;
@@ -49,6 +46,7 @@ public class DashboardActivity extends AppCompatActivity {
     BarChart chart;
     MaterialSpinner spinner;
     String choice="United States Of America";
+    Button newsFeedBtn;
     public static final int RC_SIGN_IN=100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +82,14 @@ public class DashboardActivity extends AppCompatActivity {
                     Snackbar.make(view, "Pinch And Zoom To Reveal All the Labels", Snackbar.LENGTH_LONG).show();
                     choice=item;
                     setUpBarGraph();
+                }
+            });
+            newsFeedBtn=findViewById(R.id.news_feed_btn);
+            newsFeedBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent newsFeedIntent=new Intent(DashboardActivity.this,NewsActivity.class);
+                    startActivity(newsFeedIntent);
                 }
             });
             makeSearchQuery();

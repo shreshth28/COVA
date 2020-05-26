@@ -1,10 +1,12 @@
-package com.shreshth.cova;
+package com.shreshth.cova.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.shreshth.cova.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent DashboardIntent=new Intent(MainActivity.this,DashboardActivity.class);
+                Intent DashboardIntent=new Intent(MainActivity.this, DashboardActivity.class);
                 startActivity(DashboardIntent);
                 finish();
             }

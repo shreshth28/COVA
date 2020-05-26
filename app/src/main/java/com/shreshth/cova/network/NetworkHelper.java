@@ -12,11 +12,29 @@ import java.util.Scanner;
 public class NetworkHelper {
 
     static final String BASE_URL="https://api.covid19api.com";
+    static final String BASE_URL_NEWS="https://newsapi.org/v2/top-headlines";
 
     public static URL buildNetworkUrl()
     {
         Uri builtUri=Uri.parse(BASE_URL).buildUpon()
                 .appendPath("summary")
+                .build();
+
+        URL url=null;
+        try {
+            url=new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+
+    public static URL buildNewsNetworkUrl()
+    {
+        Uri builtUri=Uri.parse(BASE_URL_NEWS).buildUpon()
+                .appendQueryParameter("q","corona")
+                .appendQueryParameter("apiKey","f60c05a24752454ba405eafbb6ac730b")
                 .build();
 
         URL url=null;

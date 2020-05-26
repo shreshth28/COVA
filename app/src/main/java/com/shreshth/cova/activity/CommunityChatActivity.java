@@ -1,4 +1,4 @@
-package com.shreshth.cova;
+package com.shreshth.cova.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.shreshth.cova.adapter.NoteAdapter;
+import com.shreshth.cova.R;
 import com.shreshth.cova.models.Note;
 
 public class CommunityChatActivity extends AppCompatActivity {

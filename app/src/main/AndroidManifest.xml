@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.shreshth.cova">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <dist:module dist:instant="true" />
 
     <application
@@ -13,9 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CommunityChatActivity"></activity>
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.NewsActivity"></activity>
+        <activity android:name=".activity.CommunityChatActivity" />
+        <activity android:name=".activity.DashboardActivity" />
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

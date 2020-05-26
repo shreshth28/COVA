@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/transparent"
+    android:background="@android:color/white"
     android:elevation="4dp"
     app:titleTextColor="@color/colorSecondaryText">
 </androidx.appcompat.widget.Toolbar>
+<!--    https://newsapi.org/v2/top-headlines?q=corona&apiKey=f60c05a24752454ba405eafbb6ac730b-->

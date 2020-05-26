@@ -1,9 +1,7 @@
 package com.shreshth.cova.network;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import com.shreshth.cova.DashboardActivity;
 import com.shreshth.cova.models.Country;
 
 import org.json.JSONArray;
