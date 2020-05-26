@@ -36,8 +36,8 @@ public class CommunityChatActivity extends AppCompatActivity {
         Toolbar toolbar=findViewById(R.id.community_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Community");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorGreenLight));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorGreenPrimary));
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
