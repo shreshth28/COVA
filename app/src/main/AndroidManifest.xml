@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.shreshth.cova">
-
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -35,6 +35,12 @@
         </receiver>
         <service android:name=".widget.CovaAppWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
+        <service android:name=".notification.ReminderFirebaseJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXCECUTE"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

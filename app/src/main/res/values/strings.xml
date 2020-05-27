@@ -7,5 +7,8 @@
     <string name="favourites">Favourites</string>
     <string name="logout">Logout</string>
     <string name="latest">Latest</string>
+    <string name="reminder_notification_title">Take A Break</string>
+    <string name="reminder_notification_body">Its time for you to wash your hands.</string>
+    <string name="main_notification_channel_name">Main Channel</string>
 
 </resources>

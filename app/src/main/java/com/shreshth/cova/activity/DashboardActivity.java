@@ -31,6 +31,8 @@ import com.shreshth.cova.R;
 import com.shreshth.cova.models.Country;
 import com.shreshth.cova.network.JSONParser;
 import com.shreshth.cova.network.NetworkHelper;
+import com.shreshth.cova.notification.NotificationUtils;
+import com.shreshth.cova.notification.ReminderUtilities;
 
 import java.io.IOException;
 import java.net.URL;
@@ -81,6 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
                     Snackbar.make(view, "Pinch And Zoom To Reveal All the Labels", Snackbar.LENGTH_LONG).show();
                     choice=item;
                     setUpBarGraph();
+                    NotificationUtils.remindUserBecauseCharging(DashboardActivity.this);
                 }
             });
             newsFeedBtn=findViewById(R.id.news_feed_btn);
@@ -91,6 +94,7 @@ public class DashboardActivity extends AppCompatActivity {
                     startActivity(newsFeedIntent);
                 }
             });
+            ReminderUtilities.scheduleChargingReminder(this);
             makeSearchQuery();
         }
 
