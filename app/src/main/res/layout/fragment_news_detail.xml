@@ -48,6 +48,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:visibility="gone"
+                    android:id="@+id/fav_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/unfavourite"></ImageButton>
+                <ImageButton
+                    android:visibility="gone"
+                    android:id="@+id/unfav_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/favourite"></ImageButton>
+            </FrameLayout>
         <TextView
             android:textStyle="bold"
             android:textSize="30sp"

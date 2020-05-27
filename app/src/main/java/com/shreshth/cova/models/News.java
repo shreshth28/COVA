@@ -3,9 +3,15 @@ package com.shreshth.cova.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "news_table")
 public class News implements Parcelable {
 
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String title;
     private String description;
     private String urlToImage;
@@ -22,6 +28,10 @@ public class News implements Parcelable {
         this.author = author;
         this.publishedAt = publishedAt;
         this.link = link;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     protected News(Parcel in) {
@@ -73,6 +83,10 @@ public class News implements Parcelable {
     public String getLink() {
         return link;
     }
+    public int getId() {
+        return id;
+    }
+
 
     @Override
     public int describeContents() {

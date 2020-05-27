@@ -29,8 +29,10 @@ public class NEWSParser {
                 String link=singleObject.getString("url");
                 String author=singleObject.getString("author");
                 String publishedAt=singleObject.getString("publishedAt");
-                News news=new News(title,description,urlToImage,content,author,publishedAt,link);
-                newsList.add(news);
+                if(author!=null) {
+                    News news = new News(title, description, urlToImage, content, author, publishedAt, link);
+                    newsList.add(news);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

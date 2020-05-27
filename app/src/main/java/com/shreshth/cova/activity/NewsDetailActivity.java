@@ -18,6 +18,9 @@ public class NewsDetailActivity extends AppCompatActivity {
     public String link;
     public String author;
     public String publishedAt;
+    public News news;
+    public int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +35,8 @@ public class NewsDetailActivity extends AppCompatActivity {
             link=news.getLink();
             author=news.getAuthor();
             publishedAt=news.getPublishedAt();
-            Toast.makeText(this, publishedAt, Toast.LENGTH_SHORT).show();
+            id=news.getId();
+            Toast.makeText(this, id+"", Toast.LENGTH_SHORT).show();
         }
     }
 }

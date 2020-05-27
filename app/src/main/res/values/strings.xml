@@ -4,5 +4,8 @@
     <string name="enter_your_message">Enter Your Message</string>
     <string name="news_feed">News Feed</string>
     <string name="health">Health</string>
+    <string name="favourites">Favourites</string>
+    <string name="logout">Logout</string>
+    <string name="latest">Latest</string>
 
 </resources>
