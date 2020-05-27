@@ -1,11 +1,11 @@
 package com.shreshth.cova.fragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.shreshth.cova.R;
+import com.shreshth.cova.activity.NewsDetailActivity;
 import com.shreshth.cova.adapter.NewsAdapter;
+import com.shreshth.cova.models.News;
 import com.shreshth.cova.network.NEWSParser;
 import com.shreshth.cova.network.NetworkHelper;
 
@@ -28,6 +30,7 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
 
     NewsAdapter newsAdapter;
     RecyclerView newsListRecyclerView;
+    List<News>newsList;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,7 +53,12 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
 
     @Override
     public void onNewsClickListener(int index) {
-        Toast.makeText(getContext(), index+" ", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), index+" ", Toast.LENGTH_SHORT).show();
+//        Intent detailNewsIntent=new Intent(getContext(), NewsDetailActivity.class);
+//        startActivity(detailNewsIntent);
+        Intent intent=new Intent(getActivity().getBaseContext(),NewsDetailActivity.class);
+        intent.putExtra("Object",newsList.get(index));
+        getActivity().startActivity(intent);
     }
 
     class GetNewsData extends AsyncTask<URL,Void,String>
@@ -76,7 +84,7 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
                 return;
             }
             else{
-                List newsList=NEWSParser.parseNewsJson(s);
+                newsList=NEWSParser.parseNewsJson(s);
                 newsAdapter.setData(newsList);
                 newsAdapter.notifyDataSetChanged();
             }

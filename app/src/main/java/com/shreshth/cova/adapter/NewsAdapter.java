@@ -40,8 +40,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         holder.title.setText(myList.get(position).getTitle());
         holder.description.setText(myList.get(position).getDescription());
-        Picasso.get().load(myList.get(position).getUrlToImage()).resize(100, 100)
-                .centerCrop().into(holder.newsItemImageView);
+        if(myList.get(position).getUrlToImage().isEmpty())
+        {
+            Picasso.get().load(R.drawable.logo).resize(100,100).centerCrop().into(holder.newsItemImageView);
+        }
+        else {
+
+            Picasso.get().load(myList.get(position).getUrlToImage()).placeholder(R.drawable.logo).resize(100, 100)
+                    .centerCrop().into(holder.newsItemImageView);
+        }
     }
 
     @Override
