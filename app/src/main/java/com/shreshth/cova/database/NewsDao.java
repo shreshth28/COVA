@@ -27,6 +27,6 @@ public interface NewsDao {
     @Query("SELECT * FROM news_table")
     LiveData<List<News>> getllNews();
 
-    @Query("SELECT * FROM news_table WHERE author=:author")
-    News getNewsByAuthor(String author);
+    @Query("SELECT * FROM news_table WHERE link=:link")
+    News getNewsByLink(String link);
 }

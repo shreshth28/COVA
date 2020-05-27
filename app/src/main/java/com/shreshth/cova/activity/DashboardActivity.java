@@ -65,7 +65,7 @@ public class DashboardActivity extends AppCompatActivity {
             Toolbar toolbar = findViewById(R.id.dashboard_toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("Dashboard");
-            toolbar.setTitleTextColor(getResources().getColor(android.R.color.holo_purple));
+            toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryText));
             community_chat_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

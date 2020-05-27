@@ -1,5 +1,7 @@
 package com.shreshth.cova.fragments;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import com.shreshth.cova.database.NewsViewModel;
 import com.shreshth.cova.models.News;
 import com.shreshth.cova.network.NEWSParser;
 import com.shreshth.cova.network.NetworkHelper;
+import com.shreshth.cova.widget.CovaAppWidgetProvider;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +43,7 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
     NewsAdapter newsAdapter;
     RecyclerView newsListRecyclerView;
     List<News>newsList;
-    List<News>fromDatabase;
+    static public List<News>fromDatabase;
     String selected="latest";
     @Nullable
     @Override
@@ -60,6 +63,10 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
                     Toast.makeText(getActivity(), "Check", Toast.LENGTH_SHORT).show();
                     showFavourites();
                 }
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
+                ComponentName thisWidget = new ComponentName(getActivity(), CovaAppWidgetProvider.class);
+                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+                appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredient_widget_list_view);
                 Toast.makeText(getActivity(), selected, Toast.LENGTH_SHORT).show();
             }
         });

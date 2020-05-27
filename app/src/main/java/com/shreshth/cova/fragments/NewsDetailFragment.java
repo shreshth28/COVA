@@ -94,7 +94,7 @@ public class NewsDetailFragment extends Fragment {
                             @Override
                             public void run() {
                                 newsDatabase=NewsDatabase.getInstance(getActivity());
-                                News checkNews=newsDatabase.newsDao().getNewsByAuthor(author);
+                                News checkNews=newsDatabase.newsDao().getNewsByLink(link);
                                 newsDatabase.newsDao().delete(checkNews);
                             }
                         }
@@ -114,7 +114,7 @@ public class NewsDetailFragment extends Fragment {
             @Override
             public void run() {
                 newsDatabase=NewsDatabase.getInstance(getContext());
-                final News myNews=newsDatabase.newsDao().getNewsByAuthor(author);
+                final News myNews=newsDatabase.newsDao().getNewsByLink(link);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
