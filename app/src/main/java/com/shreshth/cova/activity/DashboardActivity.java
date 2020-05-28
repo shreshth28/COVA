@@ -7,12 +7,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -23,14 +26,17 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.shreshth.cova.R;
 import com.shreshth.cova.models.Country;
 import com.shreshth.cova.network.JSONParser;
 import com.shreshth.cova.network.NetworkHelper;
-import com.shreshth.cova.notification.NotificationUtils;
 import com.shreshth.cova.notification.ReminderUtilities;
 
 import java.io.IOException;
@@ -48,12 +54,23 @@ public class DashboardActivity extends AppCompatActivity {
     String choice="United States Of America";
     Button newsFeedBtn;
     Toolbar toolbar;
+    Animation slide_down;
+    Animation slide_up;
+    CardView cardView1;
+    CardView cardView3;
+    AdView mAdView;
+
     public static final int RC_SIGN_IN=100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_dashboard);
+        slide_down = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_down);
 
+        slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_up);
         community_chat_btn=findViewById(R.id.community_chat_btn);
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -75,6 +92,20 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void buildApp() {
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        cardView1=findViewById(R.id.cardView1);
+        cardView3=findViewById(R.id.cardView3);
+        cardView1.startAnimation(slide_up);
+        cardView3.startAnimation(slide_up);
+
         toolbar = findViewById(R.id.dashboard_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Dashboard");
@@ -91,10 +122,9 @@ public class DashboardActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                Snackbar.make(view, "Pinch And Zoom To Reveal All the Labels", Snackbar.LENGTH_LONG).show();
+                Toast.makeText(DashboardActivity.this, "Pinch And zoom for more labels", Toast.LENGTH_SHORT).show();
                 choice=item;
                 setUpBarGraph();
-                NotificationUtils.remindUserBecauseCharging(DashboardActivity.this);
             }
         });
         newsFeedBtn=findViewById(R.id.news_feed_btn);

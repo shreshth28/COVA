@@ -1,19 +1,26 @@
 package com.shreshth.cova.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.snackbar.Snackbar;
 import com.shreshth.cova.R;
 import com.shreshth.cova.activity.NewsDetailActivity;
 import com.shreshth.cova.database.NewsDatabase;
@@ -38,6 +45,9 @@ public class NewsDetailFragment extends Fragment {
     ImageButton favBtn;
     ImageButton unFavBtn;
     NewsDatabase newsDatabase;
+    NestedScrollView nestedScrollView;
+    Animation slide_up;
+    CoordinatorLayout coordinatorLayout;
     int id;
     @Nullable
     @Override
@@ -52,9 +62,12 @@ public class NewsDetailFragment extends Fragment {
         linkView=rv.findViewById(R.id.link);
         favBtn=rv.findViewById(R.id.fav_btn);
         unFavBtn=rv.findViewById(R.id.unfav_btn);
+        nestedScrollView=(NestedScrollView) rv.findViewById(R.id.nested_scroll_view);
+        coordinatorLayout=rv.findViewById(R.id.coordinator_layout);
+        slide_up = AnimationUtils.loadAnimation(getContext(),
+                R.anim.slide_up);
         referenceActivity = ((NewsDetailActivity) this.getActivity());
         newsViewModel= ViewModelProviders.of(getActivity()).get(NewsViewModel.class);
-
         return rv;
     }
 
@@ -78,12 +91,38 @@ public class NewsDetailFragment extends Fragment {
         descriptionView.setText(description);
         linkView.setText(link);
         authorView.setText(author);
+        nestedScrollView.startAnimation(slide_up);
         favBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newsViewModel.insert(new News(title,description,imageUrl,content,author,publishedAt,link));
-                unFavBtn.setVisibility(View.VISIBLE);
-                favBtn.setVisibility(GONE);
+                AppExecutors.getInstance().diskIO().execute(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                newsViewModel.insert(new News(title,description,imageUrl,content,author,publishedAt,link));
+                            }
+                        }
+
+                );
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        favBtn.setVisibility(GONE);
+                        unFavBtn.setVisibility(View.VISIBLE);
+                        Snackbar.make(coordinatorLayout, "Added To Favourites", Snackbar.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+            }
+        });
+        linkView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(linkView.getText().toString()));
+                startActivity(i);
             }
         });
         unFavBtn.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +144,8 @@ public class NewsDetailFragment extends Fragment {
                     public void run() {
                         unFavBtn.setVisibility(GONE);
                         favBtn.setVisibility(View.VISIBLE);
+                        Snackbar.make(coordinatorLayout, "Removed From Favourites", Snackbar.LENGTH_SHORT).show();
+
                     }
                 });
 

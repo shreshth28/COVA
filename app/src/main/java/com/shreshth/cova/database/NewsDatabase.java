@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.shreshth.cova.models.News;
 
-@Database(entities = {News.class},version = 3)
+@Database(entities = {News.class},version = 4)
 public abstract class NewsDatabase extends RoomDatabase {
 
     private static NewsDatabase instance;
@@ -22,7 +22,6 @@ public abstract class NewsDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext()
             ,NewsDatabase.class,"news_database")
                     .fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
                     .build();
         }
         return instance;

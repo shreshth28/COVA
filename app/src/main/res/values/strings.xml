@@ -10,5 +10,7 @@
     <string name="reminder_notification_title">Take A Break</string>
     <string name="reminder_notification_body">Its time for you to wash your hands.</string>
     <string name="main_notification_channel_name">Main Channel</string>
+    <string name="read_the_full_article_here">Read the full article here:</string>
+    <string name="this_is_the_image_corresponding_to_the_news">This is the image corresponding to the news</string>
 
 </resources>

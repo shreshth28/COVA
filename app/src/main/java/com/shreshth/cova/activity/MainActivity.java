@@ -1,10 +1,10 @@
 package com.shreshth.cova.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.shreshth.cova.R;
 
@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent DashboardIntent=new Intent(MainActivity.this, DashboardActivity.class);
+
                 startActivity(DashboardIntent);
                 finish();
             }

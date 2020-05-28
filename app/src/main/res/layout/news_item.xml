@@ -12,6 +12,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:contentDescription="@string/this_is_the_image_corresponding_to_the_news"
         android:layout_marginLeft="2dp"
         android:id="@+id/news_list_image_view"
         android:layout_width="100dp"

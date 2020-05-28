@@ -38,6 +38,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardView1"
                 android:layout_weight="0.1"
                 app:cardCornerRadius="20dp"
                 android:layout_marginLeft="10dp"
@@ -81,46 +82,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_weight="0.1"
-                app:cardCornerRadius="20dp"
-                android:elevation="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:background="@color/colorRedLight"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:padding="10dp"
-                    android:layout_height="wrap_content">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:paddingLeft="10dp"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_virus"/>
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="2" />
-                    <Button
-                        android:background="@android:color/transparent"
-                        android:layout_weight="1.5"
-                        android:paddingRight="10dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:textColor="@color/colorRedPrimary"
-                        android:textSize="28sp"
-                        android:textStyle="normal"
-                        android:textAllCaps="false"
-                        android:text="@string/health"></Button>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView3"
                 android:layout_weight="0.1"
                 app:cardCornerRadius="20dp"
                 android:elevation="10dp"
@@ -133,7 +95,6 @@
                     android:background="@color/colorGreenLight"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:padding="10dp"
                     android:layout_height="wrap_content">
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:paddingLeft="10dp"
@@ -160,6 +121,17 @@
                         android:text="@string/community_chat"></Button>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+            <com.google.android.gms.ads.AdView
+                android:layout_weight="0.1"
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            </com.google.android.gms.ads.AdView>
         </LinearLayout>
 
 

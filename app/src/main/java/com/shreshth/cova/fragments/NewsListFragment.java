@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -60,14 +59,12 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
                 fromDatabase=news;
                 if(selected.equals("favourite"))
                 {
-                    Toast.makeText(getActivity(), "Check", Toast.LENGTH_SHORT).show();
                     showFavourites();
                 }
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
                 ComponentName thisWidget = new ComponentName(getActivity(), CovaAppWidgetProvider.class);
                 int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
                 appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredient_widget_list_view);
-                Toast.makeText(getActivity(), selected, Toast.LENGTH_SHORT).show();
             }
         });
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));

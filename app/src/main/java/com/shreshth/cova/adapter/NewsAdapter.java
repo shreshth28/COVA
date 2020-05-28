@@ -3,6 +3,9 @@ package com.shreshth.cova.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     List<News> myList=null;
     NewsItemClickListener listener;
+    private final static int FADE_DURATION = 1000;
 
     public NewsAdapter(NewsItemClickListener listener) {
         this.listener = listener;
@@ -49,6 +53,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             Picasso.get().load(myList.get(position).getUrlToImage()).placeholder(R.drawable.logo).resize(100, 100)
                     .centerCrop().into(holder.newsItemImageView);
         }
+        setFadeAnimation(holder.itemView);
+
+    }
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(1.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.0f);
+        anim.setDuration(FADE_DURATION);
+        view.startAnimation(anim);
+    }
+
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(FADE_DURATION);
+        view.startAnimation(anim);
     }
 
     @Override
@@ -74,6 +91,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         @Override
         public void onClick(View v) {
+
             int clickedIndex=getAdapterPosition();
             listener.onNewsClickListener(clickedIndex);
         }
