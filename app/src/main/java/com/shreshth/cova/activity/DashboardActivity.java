@@ -81,7 +81,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
         else {
             buildApp();
-            chart.setNoDataText("Please Select A Country from the spinner");
+            chart.setNoDataText(getString(R.string.select_country_mssg));
             if(savedInstanceState!=null) {
                 choice = savedInstanceState.getString("choice");
             }
@@ -108,7 +108,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.dashboard_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Dashboard");
+        getSupportActionBar().setTitle(getString(R.string.dashboard));
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryText));
         community_chat_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +122,7 @@ public class DashboardActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                Toast.makeText(DashboardActivity.this, "Pinch And zoom for more labels", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DashboardActivity.this, R.string.pinch_zoom_mssg, Toast.LENGTH_SHORT).show();
                 choice=item;
                 setUpBarGraph();
             }
@@ -155,14 +155,14 @@ public class DashboardActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 buildApp();
-                chart.setNoDataText("Please Select A Country from the spinner");
+                chart.setNoDataText(getString(R.string.select_country_mssg));
                 // ...
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
                 // ...
-                Toast.makeText(this, "Error Signing In", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_signin_mssg, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -251,13 +251,13 @@ public class DashboardActivity extends AppCompatActivity {
                     entries.add(new BarEntry(4,object.getNewRecovered()));
                     entries.add(new BarEntry(5,object.getNewDeaths()));
                     final ArrayList<String>fields = new ArrayList<String>();
-                    fields.add("New Confirmed");
-                    fields.add("Total Confirmed");
-                    fields.add("Total Recovered");
-                    fields.add("Total Deaths");
-                    fields.add("New Recovered");
-                    fields.add("New Deaths");
-                    BarDataSet bardataset = new BarDataSet(entries, "Bar Dataset");
+                    fields.add(getString(R.string.new_confirmed));
+                    fields.add(getString(R.string.total_confirmed));
+                    fields.add(getString(R.string.total_recovered));
+                    fields.add(getString(R.string.total_deaths));
+                    fields.add(getString(R.string.new_recovered));
+                    fields.add(getString(R.string.new_deaths));
+                    BarDataSet bardataset = new BarDataSet(entries, getString(R.string.bar_dataset));
                     chart.animateY(5000);
                     BarData data = new BarData(bardataset);
                     data.setBarWidth(1f);

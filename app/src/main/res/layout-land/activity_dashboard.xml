@@ -13,7 +13,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_weight="1"
@@ -41,8 +42,8 @@
                 android:id="@+id/cardView1"
                 android:layout_weight="0.1"
                 app:cardCornerRadius="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:elevation="10dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="5dp"
@@ -56,7 +57,8 @@
 
                     android:layout_height="wrap_content">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:paddingLeft="10dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_gravity="center_vertical"
@@ -69,7 +71,8 @@
                         android:id="@+id/news_feed_btn"
                         android:background="@android:color/transparent"
                         android:layout_weight="1.5"
-                        android:paddingRight="10dp"
+                        android:paddingEnd="5dp"
+                        android:paddingStart="5dp"
                         android:layout_gravity="center_vertical"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
@@ -86,8 +89,8 @@
                 android:layout_weight="0.1"
                 app:cardCornerRadius="20dp"
                 android:elevation="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -97,7 +100,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:paddingLeft="10dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_gravity="center_vertical"
@@ -110,7 +114,8 @@
                         android:id="@+id/community_chat_btn"
                         android:background="@android:color/transparent"
                         android:layout_weight="1.5"
-                        android:paddingRight="10dp"
+                        android:paddingEnd="5dp"
+                        android:paddingStart="5dp"
                         android:layout_gravity="center_vertical"
                         android:layout_width="64dp"
                         android:layout_height="64dp"

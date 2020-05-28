@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,26 +42,33 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
     private NewsViewModel newsViewModel;
     NewsAdapter newsAdapter;
     RecyclerView newsListRecyclerView;
-    List<News>newsList;
+    static List<News>newsList;
     static public List<News>fromDatabase;
-    String selected="latest";
+    LinearLayoutManager linearLayoutManager;
+    static String selected="latest";
+    private static final String BUNDLE_RECYCLER_LAYOUT="recycler_layout";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rv=inflater.inflate(R.layout.fragment_news_list,container,false);
-
-        Toolbar toolbar =rv.findViewById(R.id.news_list_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("News Feed");
+        Toolbar toolbar = rv.findViewById(R.id.news_list_toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("News Feed");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        newsViewModel= ViewModelProviders.of(getActivity()).get(NewsViewModel.class);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorLightPrimary));
+        newsListRecyclerView = rv.findViewById(R.id.news_list_recycler_view);
+        newsViewModel = ViewModelProviders.of(getActivity()).get(NewsViewModel.class);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        newsAdapter = new NewsAdapter(this);
+        newsListRecyclerView.setLayoutManager(linearLayoutManager);
+        newsListRecyclerView.setAdapter(newsAdapter);
         newsViewModel.getAllNews().observe(getActivity(), new Observer<List<News>>() {
             @Override
             public void onChanged(List<News> news) {
-                fromDatabase=news;
-                if(selected.equals("favourite"))
-                {
+                fromDatabase = news;
+                if (selected.equals("favourite")) {
                     showFavourites();
                 }
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getActivity());
@@ -69,16 +77,19 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
                 appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredient_widget_list_view);
             }
         });
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorLightPrimary));
-        newsListRecyclerView =rv.findViewById(R.id.news_list_recycler_view);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-        newsAdapter=new NewsAdapter(this);
-        newsListRecyclerView.setLayoutManager(linearLayoutManager);
-        newsListRecyclerView.setAdapter(newsAdapter);
-        GetNewsData getNewsData=new GetNewsData();
-        URL url=NetworkHelper.buildNewsNetworkUrl();
-        getNewsData.execute(url);
+        if(savedInstanceState==null) {
+            GetNewsData getNewsData = new GetNewsData();
+            URL url = NetworkHelper.buildNewsNetworkUrl();
+            getNewsData.execute(url);
+        }
+        else{
+            if(selected.equals("latest")) {
+                newsAdapter.setData(newsList);
+            }
+            else{
+                newsAdapter.setData(fromDatabase);
+            }
+        }
         return rv;
     }
 
@@ -173,4 +184,19 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
         newsAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT,linearLayoutManager.onSaveInstanceState());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState!=null)
+        {
+            Parcelable savedRecyclerState= savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            newsListRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerState);
+        }
+    }
 }

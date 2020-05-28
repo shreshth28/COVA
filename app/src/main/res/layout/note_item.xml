@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/message_text_view"
-            android:text="My sample message"
+            tools:text="My sample message"
             android:textSize="14sp">
 
         </TextView>
@@ -37,7 +37,7 @@
             android:id="@+id/name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Shreshth Srivastava"
+            tools:text="Shreshth Srivastava"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/message_text_view">
         </TextView>

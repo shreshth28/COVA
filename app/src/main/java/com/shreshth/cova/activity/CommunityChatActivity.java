@@ -40,7 +40,7 @@ public class CommunityChatActivity extends AppCompatActivity {
         sendButton=findViewById(R.id.button_send);
         Toolbar toolbar=findViewById(R.id.community_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Community");
+        getSupportActionBar().setTitle(getString(R.string.community));
         toolbar.setBackgroundColor((getResources().getColor(android.R.color.white)));
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryText));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

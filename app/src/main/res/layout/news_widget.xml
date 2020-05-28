@@ -11,7 +11,7 @@
         android:fontFamily="monospace"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="FAVOURITE NEWS"></Button>
+        android:text="@string/favourite_news"></Button>
 
     <FrameLayout
         android:layout_width="match_parent"

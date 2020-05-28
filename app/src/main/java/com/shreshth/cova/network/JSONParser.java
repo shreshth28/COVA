@@ -1,7 +1,5 @@
 package com.shreshth.cova.network;
 
-import android.util.Log;
-
 import com.shreshth.cova.models.Country;
 
 import org.json.JSONArray;
@@ -36,7 +34,6 @@ public class JSONParser {
             return arrayList;
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("JSONPARSER",e.getMessage());
         }
 
         return null;

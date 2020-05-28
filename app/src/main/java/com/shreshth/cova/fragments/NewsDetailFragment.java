@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -55,6 +58,7 @@ public class NewsDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rv=inflater.inflate(R.layout.fragment_news_detail,container,false);
+        setHasOptionsMenu(true);
         detailImageView=rv.findViewById(R.id.detail_image_view);
         contentTextView=rv.findViewById(R.id.content_text_view);
         collapsingToolbarLayout=rv.findViewById(R.id.collapsing_toolbar);
@@ -68,8 +72,11 @@ public class NewsDetailFragment extends Fragment {
         coordinatorLayout=rv.findViewById(R.id.coordinator_layout);
         slide_up = AnimationUtils.loadAnimation(getContext(),
                 R.anim.slide_up);
+
         referenceActivity = ((NewsDetailActivity) this.getActivity());
         newsViewModel= ViewModelProviders.of(getActivity()).get(NewsViewModel.class);
+        Toolbar toolbar =rv.findViewById(R.id.detail_toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         return rv;
@@ -180,18 +187,26 @@ public class NewsDetailFragment extends Fragment {
 
         if(author==null)
         {
-            authorView.setText("Data Unavailable");
+            authorView.setText(R.string.data_unavailable);
         }
 
     }
 
     @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-        if(id==android.R.id.home)
+        switch (id)
         {
-            getActivity().finish();
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

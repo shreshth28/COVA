@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.appbar.AppBarLayout
@@ -30,6 +31,8 @@
 
 
             <androidx.appcompat.widget.Toolbar
+                app:layout_collapseMode="pin"
+                android:id="@+id/detail_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
@@ -56,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageButton
+                    android:contentDescription="@string/this_is_the_remove_from_favourite_button"
                     android:background="@android:color/transparent"
                     android:visibility="gone"
                     android:id="@+id/fav_btn"
@@ -63,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/unfavourite"></ImageButton>
                 <ImageButton
+                    android:contentDescription="@string/this_is_the_add_to_favourite_button"
                     android:background="@android:color/transparent"
                     android:visibility="gone"
                     android:id="@+id/unfav_btn"
@@ -103,7 +108,7 @@
             android:id="@+id/content_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            tools:text="Lorem Ipsum is simply dummy text of the printing."
             android:textSize="20sp"
             android:lineSpacingExtra="6sp"
             />

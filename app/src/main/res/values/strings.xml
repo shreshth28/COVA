@@ -12,5 +12,24 @@
     <string name="main_notification_channel_name">Main Channel</string>
     <string name="read_the_full_article_here">Read the full article here:</string>
     <string name="this_is_the_image_corresponding_to_the_news">This is the image corresponding to the news</string>
+    <string name="this_is_the_app_logo">This is the app Logo</string>
+    <string name="this_is_the_remove_from_favourite_button">This is the remove from favourite button</string>
+    <string name="this_is_the_add_to_favourite_button">This is the add to favourite button</string>
+    <string name="favourite_news">FAVOURITE NEWS</string>
+    <string name="data_unavailable">Data Unavailable</string>
+    <string name="community">Community</string>
+    <string name="messages">messages</string>
+    <string name="timestamp">timestamp</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="pinch_zoom_mssg">Pinch And zoom for more labels</string>
+    <string name="select_country_mssg">Please Select A Country from the spinner</string>
+    <string name="error_signin_mssg">Error Signing In</string>
+    <string name="new_confirmed">New Confirmed</string>
+    <string name="total_confirmed">Total Confirmed</string>
+    <string name="total_recovered">Total Recovered</string>
+    <string name="total_deaths">Total Deaths</string>
+    <string name="new_recovered">New Recovered</string>
+    <string name="new_deaths">New Deaths</string>
+    <string name="bar_dataset">Bar Dataset</string>
 
 </resources>
