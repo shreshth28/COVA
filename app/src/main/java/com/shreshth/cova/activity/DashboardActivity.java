@@ -25,7 +25,6 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.shreshth.cova.R;
 import com.shreshth.cova.models.Country;
@@ -48,13 +47,13 @@ public class DashboardActivity extends AppCompatActivity {
     MaterialSpinner spinner;
     String choice="United States Of America";
     Button newsFeedBtn;
+    Toolbar toolbar;
     public static final int RC_SIGN_IN=100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        // Choose authentication providers
         community_chat_btn=findViewById(R.id.community_chat_btn);
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -64,41 +63,50 @@ public class DashboardActivity extends AppCompatActivity {
             showSignInOptions();
         }
         else {
-            Toolbar toolbar = findViewById(R.id.dashboard_toolbar);
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Dashboard");
-            toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryText));
-            community_chat_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent communityChatIntent = new Intent(DashboardActivity.this, CommunityChatActivity.class);
-                    startActivity(communityChatIntent);
-                }
-            });
-            chart=findViewById(R.id.chart);
-            spinner = (MaterialSpinner) findViewById(R.id.spinner);
-            spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            buildApp();
+            chart.setNoDataText("Please Select A Country from the spinner");
+            if(savedInstanceState!=null) {
+                choice = savedInstanceState.getString("choice");
+            }
 
-                @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                    Snackbar.make(view, "Pinch And Zoom To Reveal All the Labels", Snackbar.LENGTH_LONG).show();
-                    choice=item;
-                    setUpBarGraph();
-                    NotificationUtils.remindUserBecauseCharging(DashboardActivity.this);
-                }
-            });
-            newsFeedBtn=findViewById(R.id.news_feed_btn);
-            newsFeedBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent newsFeedIntent=new Intent(DashboardActivity.this,NewsActivity.class);
-                    startActivity(newsFeedIntent);
-                }
-            });
-            ReminderUtilities.scheduleChargingReminder(this);
-            makeSearchQuery();
         }
 
 
+    }
+
+    private void buildApp() {
+        toolbar = findViewById(R.id.dashboard_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Dashboard");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryText));
+        community_chat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent communityChatIntent = new Intent(DashboardActivity.this, CommunityChatActivity.class);
+                startActivity(communityChatIntent);
+            }
+        });
+        chart=findViewById(R.id.chart);
+        spinner = (MaterialSpinner) findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                Snackbar.make(view, "Pinch And Zoom To Reveal All the Labels", Snackbar.LENGTH_LONG).show();
+                choice=item;
+                setUpBarGraph();
+                NotificationUtils.remindUserBecauseCharging(DashboardActivity.this);
+            }
+        });
+        newsFeedBtn=findViewById(R.id.news_feed_btn);
+        newsFeedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newsFeedIntent=new Intent(DashboardActivity.this,NewsActivity.class);
+                startActivity(newsFeedIntent);
+            }
+        });
+        ReminderUtilities.scheduleChargingReminder(this);
+        makeSearchQuery();
     }
 
     private void makeSearchQuery() {
@@ -116,7 +124,8 @@ public class DashboardActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                buildApp();
+                chart.setNoDataText("Please Select A Country from the spinner");
                 // ...
             } else {
                 // Sign in failed. If response is null the user canceled the
@@ -203,6 +212,7 @@ public class DashboardActivity extends AppCompatActivity {
             Country object=myList.get(x);
             if(object.getCountry().equals(choice))
             {
+
                 try {
                     entries.add(new BarEntry(0,object.getNewConfirmed()));
                     entries.add(new BarEntry(1,object.getTotalConfirmed()));
@@ -231,6 +241,7 @@ public class DashboardActivity extends AppCompatActivity {
                     xAxis.setValueFormatter(new IndexAxisValueFormatter(fields));
                     xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
                     chart.setData(data);
+
                 }
                 catch (Exception e)
                 {
@@ -239,5 +250,11 @@ public class DashboardActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("choice",choice);
     }
 }

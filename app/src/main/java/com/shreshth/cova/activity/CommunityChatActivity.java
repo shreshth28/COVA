@@ -1,14 +1,14 @@
 package com.shreshth.cova.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,8 +16,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.shreshth.cova.adapter.NoteAdapter;
 import com.shreshth.cova.R;
+import com.shreshth.cova.adapter.NoteAdapter;
 import com.shreshth.cova.models.Note;
 
 public class CommunityChatActivity extends AppCompatActivity {
@@ -44,11 +44,14 @@ public class CommunityChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String message=messageEditText.getText().toString();
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                String uid = user.getUid();
-                String name=user.getDisplayName();
-                long timestamp=System.currentTimeMillis();
-                messageRef.add(new Note(message,name,String.valueOf(timestamp),uid));
+                message=message.trim();
+                if(!message.equals("")) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = user.getUid();
+                    String name = user.getDisplayName();
+                    long timestamp = System.currentTimeMillis();
+                    messageRef.add(new Note(message, name, String.valueOf(timestamp), uid));
+                }
                 messageEditText.setText("");
             }
         });
