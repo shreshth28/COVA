@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,6 +32,7 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note,NoteAdapter.NoteH
      * @param options
      */
     Context context;
+    Animation slide_up;
     public NoteAdapter(@NonNull FirestoreRecyclerOptions<Note> options) {
         super(options);
     }
@@ -48,9 +51,12 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note,NoteAdapter.NoteH
         }
     }
 
+
     @NonNull
     @Override
     public NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        slide_up = AnimationUtils.loadAnimation(parent.getContext(),
+                R.anim.slide_up);
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item,parent,false);
         context=parent.getContext();
         return new NoteHolder(v);
@@ -65,6 +71,7 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note,NoteAdapter.NoteH
 
         public NoteHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.startAnimation(slide_up);
             textViewMessage=itemView.findViewById(R.id.message_text_view);
             textViewName=itemView.findViewById(R.id.name_text_view);
             linearLayout=itemView.findViewById(R.id.linear_layout);

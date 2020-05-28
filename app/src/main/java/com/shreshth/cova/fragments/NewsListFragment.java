@@ -52,6 +52,8 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
         Toolbar toolbar =rv.findViewById(R.id.news_list_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("News Feed");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         newsViewModel= ViewModelProviders.of(getActivity()).get(NewsViewModel.class);
         newsViewModel.getAllNews().observe(getActivity(), new Observer<List<News>>() {
             @Override
@@ -138,6 +140,10 @@ public class NewsListFragment extends Fragment implements NewsAdapter.NewsItemCl
                 break;
             case R.id.latest_option:
                 showLatest();
+                break;
+            case android.R.id.home:
+                getActivity().finish();
+
         }
         return super.onOptionsItemSelected(item);
     }

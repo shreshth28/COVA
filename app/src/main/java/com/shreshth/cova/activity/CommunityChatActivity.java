@@ -1,10 +1,13 @@
 package com.shreshth.cova.activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,8 +41,10 @@ public class CommunityChatActivity extends AppCompatActivity {
         Toolbar toolbar=findViewById(R.id.community_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Community");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorGreenLight));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorGreenPrimary));
+        toolbar.setBackgroundColor((getResources().getColor(android.R.color.white)));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryText));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +56,13 @@ public class CommunityChatActivity extends AppCompatActivity {
                     String name = user.getDisplayName();
                     long timestamp = System.currentTimeMillis();
                     messageRef.add(new Note(message, name, String.valueOf(timestamp), uid));
+                    try {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                    recyclerView.smoothScrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
                 messageEditText.setText("");
             }
@@ -64,7 +76,9 @@ public class CommunityChatActivity extends AppCompatActivity {
 noteAdapter=new NoteAdapter(options);
 recyclerView=findViewById(R.id.chat_list_rv);
 recyclerView.setHasFixedSize(true);
-recyclerView.setLayoutManager(new LinearLayoutManager(this));
+LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+linearLayoutManager.setStackFromEnd(true);
+recyclerView.setLayoutManager(linearLayoutManager);
 recyclerView.setAdapter(noteAdapter);
     }
 
@@ -80,5 +94,15 @@ recyclerView.setAdapter(noteAdapter);
     protected void onStop() {
         super.onStop();
         noteAdapter.stopListening();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if(id==android.R.id.home)
+        {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

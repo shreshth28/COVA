@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -68,6 +70,8 @@ public class NewsDetailFragment extends Fragment {
                 R.anim.slide_up);
         referenceActivity = ((NewsDetailActivity) this.getActivity());
         newsViewModel= ViewModelProviders.of(getActivity()).get(NewsViewModel.class);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         return rv;
     }
 
@@ -179,5 +183,15 @@ public class NewsDetailFragment extends Fragment {
             authorView.setText("Data Unavailable");
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if(id==android.R.id.home)
+        {
+            getActivity().finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
